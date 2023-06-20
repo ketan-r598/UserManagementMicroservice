@@ -1,6 +1,8 @@
 package com.project.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 import com.project.model.User;
 import com.project.model.UserCredentials;
 import com.project.model.UserInfo;
+import com.project.service.TokenGeneratorService;
 import com.project.service.UserService;
 
 @RestController
@@ -22,6 +24,9 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private TokenGeneratorService tokenGenerator;
 	
 	@GetMapping("/users/getAll")
 	public List<User> getAll() {
@@ -34,13 +39,15 @@ public class UserController {
 	}
 	
 	@PostMapping("/users/login")
-	public void userLogin(@RequestBody UserCredentials user) {
+	public Map<String,String> userLogin(@RequestBody UserCredentials user) {
 		
 		Optional<User> u = service.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
 		
 		if(u.isPresent()) {
 			System.out.println("Login Successful");
-		}
+			}
+		final UserCredentials user1 = this.service.authenticateUser(user.getEmail(), user.getPassword());
+		return this.tokenGenerator.generateToken(user1);
 		
 		// TODO
 		// throw error
