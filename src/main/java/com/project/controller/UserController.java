@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.model.User;
@@ -20,6 +21,7 @@ import com.project.service.UserService;
 import com.project.session.Session;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -28,17 +30,17 @@ public class UserController {
 	@Autowired
 	private TokenGeneratorService tokenGenerator;
 
-	@GetMapping("/users/getAll")
+	@GetMapping("/getAll")
 	public List<User> getAll() {
 		return service.getAll();
 	}
 
-	@PostMapping("/users/register")
+	@PostMapping("/register")
 	public void addUser(@RequestBody User user) {
 		service.addUser(user);
 	}
 
-	@PostMapping("/users/login")
+	@PostMapping("/login")
 	public Map<String, String> userLogin(@RequestBody UserCredentials user) {
 
 		Optional<User> u = service.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
@@ -60,7 +62,7 @@ public class UserController {
 		return null;
 	}
 
-	@PutMapping("/users/update")
+	@PutMapping("/update")
 	public void updateUser(@RequestBody UserInfo user) {
 //		Session session = Session.getSession();
 //		User u = service.findById(session.getUserId()).get();
@@ -77,7 +79,7 @@ public class UserController {
 		service.updateUser(user);
 	}
 
-	@DeleteMapping("/users/delete")
+	@DeleteMapping("/delete")
 	public void deleteUser() {
 		service.deleteUser();
 	}
