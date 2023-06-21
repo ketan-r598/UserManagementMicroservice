@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.model.*;
 import com.project.model.User;
 import com.project.model.UserInfo;
 import com.project.repository.UserRepository;
@@ -73,5 +74,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Optional<User> findUserByEmailAndPassword(String Email, String Password) {
 		return repo.findByEmailAndPassword(Email, Password);
+	}
+	
+	@Override
+	public UserCredentials authenticateUser(String email, String password) {
+		final Optional<User> optionalUser = this.repo.findByEmailAndPassword(email, password);
+		final UserCredentials u = new UserCredentials(email, password);
+		if(optionalUser.isEmpty()) {
+			// throw user not found exception
+		}
+		return u;
 	}
 }
