@@ -6,10 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.model.*;
 import com.project.model.User;
+import com.project.model.UserCredentials;
 import com.project.model.UserInfo;
 import com.project.repository.UserRepository;
+import com.project.session.Session;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,15 +40,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(UserInfo user) {
+		Session session = Session.getSession();
 		
-		String email = user.getEmail();
-		String password = "";
-		String role = "";
+		int id = session.getUserId();
+		String email = session.getEmail();
+		String password = session.getPassword();
+		String role = session.getRole();
 		
 		Optional<User> temp_user = repo.findByEmail(email);
 		
 		if(temp_user.isPresent()) {
-			User u = new User(email, password, user.getFirstName(), user.getLastName(), user.getContactNumber(), user.getAddress(), role);
+			User u = new User(id, email, password, user.getFirstName(), user.getLastName(), user.getContactNumber(), user.getAddress(), role);
 			repo.save(u);
 			System.out.println("---------------------------------");
 			System.out.println("+   User Updated Successfully   +");
@@ -59,8 +62,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String email, String password) {
-		repo.deleteByEmailAndPassword(email, password);
+	public void deleteUser() {
+//		repo.deleteByEmailAndPassword(email, password);
+		Session session = Session.getSession();
+		repo.deleteById(session.getUserId());
 		System.out.println("---------------------------------");
 		System.out.println("+   User Deleted Successfully   +");
 		System.out.println("---------------------------------");
@@ -85,4 +90,14 @@ public class UserServiceImpl implements UserService {
 		}
 		return u;
 	}
+
+//	@Override
+//	public Optional<User> findById(int id) {
+//		Optional<User> u = repo.findById(id);
+//		
+//		if(u.isEmpty())
+//			return Optional.empty();
+//		
+//		return u;
+//	}
 }
