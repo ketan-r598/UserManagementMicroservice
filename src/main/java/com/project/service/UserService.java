@@ -13,6 +13,9 @@ public interface UserService {
 	public Optional<User> findUserByEmailAndPassword(String Email, String Password);
 	public UserCredentials authenticateUser(String email,String password);
 	public void addUser(User user);
+//	public Optional<User> findById(int id);
 	public void updateUser(UserInfo user);
-	public void deleteUser(String email, String password);
+//	public void deleteUser(String email);
+	public void deleteUser();
+//	public void deleteUser(String email, String password);
 }
