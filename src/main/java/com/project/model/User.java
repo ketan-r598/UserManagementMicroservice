@@ -1,6 +1,9 @@
 package com.project.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -9,13 +12,28 @@ import jakarta.persistence.Table;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name="email")
 	private String email;
+	
+	@Column(name="password")
 	private String password;
+	
+	@Column(name="first_name")
 	private String firstName;
+	
+	@Column(name="last_name")
 	private String lastName;
+	
+	@Column(name="contact_number")
 	private String contactNumber;
+	
+	@Column(name="address")
 	private String address;
+	
+	@Column(name="role")
 	private String role;
 	
 	
@@ -26,7 +44,7 @@ public class User {
 
 	public User(int id, String email, String password, String firstName, String lastName, String contactNumber,
 			String address, String role) {
-		this.id = id;
+//		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
@@ -62,9 +80,9 @@ public class User {
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 
 	public String getEmail() {
