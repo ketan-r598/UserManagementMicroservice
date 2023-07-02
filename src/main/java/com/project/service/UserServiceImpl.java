@@ -41,23 +41,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User user) {
-		Session session = Session.getSession();
+//		Session session = Session.getSession();
 		
-		int id = session.getUserId();
+//		int id = session.getUserId();
 //		String email = session.getEmail();
 //		String password = session.getPassword();
 //		String role = session.getRole();
 		
 //		Optional<User> temp_user = repo.findByEmail(email);
-		Optional<User> temp_user = repo.findById(id);
+//		Optional<User> temp_user = repo.findById(id);
 		
-		if(temp_user.isPresent()) {
+//		if(temp_user.isPresent()) {
 //			User u = new User(id, email, password, user.getFirstName(), user.getLastName(), user.getContactNumber(), user.getAddress(), role);
-			repo.save(temp_user.get());
+			repo.save(user);
 			System.out.println("---------------------------------");
 			System.out.println("+   User Updated Successfully   +");
 			System.out.println("---------------------------------");
-		}
+//		}
 		
 		//TODO
 		// throw Exception
