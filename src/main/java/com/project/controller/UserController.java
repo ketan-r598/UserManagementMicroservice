@@ -23,7 +23,7 @@ import com.project.service.TokenGeneratorService;
 import com.project.service.UserService;
 import com.project.session.Session;
 
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "*", allowedHeaders="*")
 @RestController
 @RequestMapping("/users/")
 public class UserController {
@@ -77,7 +77,10 @@ public class UserController {
 //			System.out.println(this.tokenGenerator.generateToken(session).get("token"));
 			retVal.put("token", this.tokenGenerator.generateToken(session).get("token"));
 //			System.out.println(u.get());
-			retVal.put("user",u.get().toString());
+			retVal.put("userId",Integer.toString(u.get().getId()));
+			retVal.put("userEmail", u.get().getEmail());
+			retVal.put("password", u.get().getPassword());
+			retVal.put("role", u.get().getRole());
 //			System.out.println(retVal);
 			return retVal;
 		}
